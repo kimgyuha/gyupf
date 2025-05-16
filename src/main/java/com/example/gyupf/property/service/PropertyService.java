@@ -14,7 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -92,6 +95,45 @@ public class PropertyService {
 
         return response;
     }
+    
+    //조건 설정한 매물리스트 조회
+    public PagedPropertyResponse getPropertiesWithCondition(
+            String propertyType,
+            String dealType,
+            Long minAmount,
+            Long maxAmount,
+            String district,
+            String dealStatus,
+            int page,
+            int size) {
+
+        int offset = (page - 1) * size;
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("propertyType", propertyType);
+        params.put("dealType", dealType);
+        params.put("minAmount", minAmount);
+        params.put("maxAmount", maxAmount);
+        params.put("district", district);
+        params.put("dealStatus", dealStatus);
+        params.put("pageSize", size);
+        params.put("offset", offset);
+
+        List<PropertyListDto> list = propertyMapper.selectPropertyListWithConditionPaged(params);
+        int totalCount = propertyMapper.countPropertiesWithCondition(params);
+
+        int totalPages = (int) Math.ceil((double) totalCount / size);
+        boolean hasNext = page < totalPages;
+
+        PagedPropertyResponse response = new PagedPropertyResponse();
+        response.setProperties(list);
+        response.setCurrentPage(page);
+        response.setTotalPages(totalPages);
+        response.setHasNext(hasNext);
+
+        return response;
+    }
+    
     //단일매물 조회
     public PropertyDetailDto getPropertyById(Long propertyNum) {
         return propertyMapper.selectById(propertyNum);

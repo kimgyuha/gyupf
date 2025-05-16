@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gyupf.customer.mapper.CustomerMapper">
+
+    <resultMap id="CustomerResultMap" type="com.example.gyupf.customer.dto.CustomerDto">
+        <id property="customerNum" column="customer_num"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="customerPw" column="customer_pw"/>
+        <result property="name" column="name"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="message" column="message"/>
+        <result property="inquiryDt" column="inquiry_dt"/>
+        <result property="agreementYn" column="agreement_yn"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="CustomerResultMap">
+        SELECT * FROM customer
+    </select>
+
+    <select id="selectById" resultMap="CustomerResultMap">
+        SELECT * FROM customer WHERE customer_num = #{customerNum}
+    </select>
+
+    <insert id="insert" parameterType="com.example.gyupf.customer.dto.CustomerDto">
+        INSERT INTO customer (customer_id, customer_pw, name, phone_number, message, inquiry_dt, agreement_yn)
+        VALUES (#{customerId}, #{customerPw}, #{name}, #{phoneNumber}, #{message}, #{inquiryDt}, #{agreementYn})
+    </insert>
+
+    <update id="update" parameterType="com.example.gyupf.customer.dto.CustomerDto">
+        UPDATE customer
+        SET customer_id = #{customerId},
+            customer_pw = #{customerPw},
+            name = #{name},
+            phone_number = #{phoneNumber},
+            message = #{message},
+            agreement_yn = #{agreementYn}
+        WHERE customer_num = #{customerNum}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM customer WHERE customer_num = #{customerNum}
+    </delete>
+
+</mapper>

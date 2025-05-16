@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gyupf.favorite.mapper.FavoriteMapper">
+
+    <resultMap id="FavoriteResultMap" type="com.example.gyupf.favorite.dto.FavoriteDto">
+        <id property="favoriteNum" column="favorite_num"/>
+        <result property="customerNum" column="customer_num"/>
+        <result property="propertyNum" column="property_num"/>
+        <result property="favoriteDt" column="favorite_dt"/>
+        <result property="isFavorite" column="is_favorite"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="FavoriteResultMap">
+        SELECT * FROM favorite
+    </select>
+
+    <select id="countFavoritesByProperty" resultType="int">
+        SELECT COUNT(*) FROM favorite WHERE property_num = #{propertyNum}
+    </select>
+
+    <select id="selectFavoritePropertiesByCustomer"
+            resultType="com.example.gyupf.favorite.dto.FavoritePropertyDto">
+        SELECT A.favorite_num, A.customer_num, A.property_num, A.favorite_dt, A.is_favorite,
+        B.image_url, B.address, B.property_type, B.deal_type, B.amount,
+        B.details, B.land_area, B.building_area, B.created_dt, B.deal_status
+        FROM favorite A
+        LEFT OUTER JOIN property B ON A.property_num = B.property_num
+        WHERE A.customer_num = #{customerNum}
+    </select>
+
+    <select id="selectFavoritePropertiesByProperty"
+            resultType="com.example.gyupf.favorite.dto.FavoritePropertyDto">
+        SELECT A.favorite_num, A.customer_num, A.property_num, A.favorite_dt, A.is_favorite,
+               B.image_url, B.address, B.property_type, B.deal_type, B.amount,
+               B.details, B.land_area, B.building_area, B.created_dt, B.deal_status
+        FROM favorite A
+                 LEFT OUTER JOIN property B ON A.property_num = B.property_num
+        WHERE A.property_num = #{propertyNum}
+    </select>
+
+    <insert id="insert" parameterType="com.example.gyupf.favorite.dto.FavoriteDto">
+        INSERT INTO favorite (customer_num, property_num, is_favorite)
+        VALUES (#{customerNum}, #{propertyNum}, #{isFavorite})
+    </insert>
+
+    <update id="update" parameterType="com.example.gyupf.favorite.dto.FavoriteDto">
+        UPDATE favorite
+        SET customer_num = #{customerNum},
+        property_num = #{propertyNum},
+        is_favorite = #{isFavorite}
+        WHERE favorite_num = #{favoriteNum}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM favorite WHERE favorite_num = #{favoriteNum}
+    </delete>
+
+</mapper>

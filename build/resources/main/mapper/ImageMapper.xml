@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gyupf.image.mapper.ImageMapper">
+
+    <resultMap id="ImageResultMap" type="com.example.gyupf.image.dto.ImageDto">
+        <id property="imageNum" column="image_num"/>
+        <result property="propertyNum" column="property_num"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="imageSeq" column="image_seq"/>
+        <result property="registedDt" column="registed_dt"/>
+    </resultMap>
+
+    <select id="selectByPropertyNum" resultMap="ImageResultMap">
+        SELECT * FROM property_images WHERE property_num = #{propertyNum}
+    </select>
+
+    <insert id="insert" parameterType="com.example.gyupf.image.dto.ImageDto">
+        INSERT INTO property_images (property_num, image_url, image_seq)
+        VALUES (#{propertyNum}, #{imageUrl}, #{imageSeq})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM property_images WHERE image_num = #{imageNum}
+    </delete>
+
+</mapper>

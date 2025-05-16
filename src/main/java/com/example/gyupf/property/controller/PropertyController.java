@@ -41,6 +41,19 @@ public class PropertyController {
         return propertyService.getPagedProperties(page, size);
     }
 
+    @GetMapping("/search")
+    public PagedPropertyResponse searchProperties(
+            @RequestParam(required = false) String propertyType,
+            @RequestParam(required = false) String dealType,
+            @RequestParam(required = false) Long minAmount,
+            @RequestParam(required = false) Long maxAmount,
+            @RequestParam(required = false) String district,
+            @RequestParam(required = false) String dealStatus,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        return propertyService.getPropertiesWithCondition(propertyType, dealType, minAmount, maxAmount, district, dealStatus, page, size);
+    }
     // 단일 매물 상세 조회
     @GetMapping("/{id}")
     public PropertyDetailDto detail(@PathVariable Long id) {

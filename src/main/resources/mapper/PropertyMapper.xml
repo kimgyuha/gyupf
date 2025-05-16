@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.gyupf.property.mapper.PropertyMapper">
+
+    <resultMap id="PropertyDetailResultMap" type="com.example.gyupf.property.dto.PropertyDetailDto">
+        <id property="propertyNum" column="property_num"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="address" column="address"/>
+        <result property="propertyType" column="property_type"/>
+        <result property="dealType" column="deal_type"/>
+        <result property="amount" column="amount"/>
+        <result property="maintenanceCost" column="maintenance_cost"/>
+        <result property="elevatorExists" column="elevator_exists"/>
+        <result property="parkingAvailableNum" column="parking_available_num"/>
+        <result property="options" column="options"/>
+        <result property="landArea" column="land_area"/>
+        <result property="landUse" column="land_use"/>
+        <result property="landName" column="land_name"/>
+        <result property="landInfEtc1" column="land_inf_etc1"/>
+        <result property="landInfEtc2" column="land_inf_etc2"/>
+        <result property="buildingArea" column="building_area"/>
+        <result property="buildingFloorArea" column="building_floor_area"/>
+        <result property="buildingGroundFloor" column="building_ground_floor"/>
+        <result property="buildingBasementFloor" column="building_basement_floor"/>
+        <result property="buildingCompletionDt" column="building_completion_dt"/>
+        <result property="buildingInfEtc1" column="building_inf_etc1"/>
+        <result property="buildingInfEtc2" column="building_inf_etc2"/>
+        <result property="agentInf" column="agent_inf"/>
+        <result property="extraField1" column="extra_field1"/>
+        <result property="extraField2" column="extra_field2"/>
+        <result property="extraField3" column="extra_field3"/>
+        <result property="extraField4" column="extra_field4"/>
+        <result property="details" column="details"/>
+        <result property="notes" column="notes"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="updatedDt" column="updated_dt"/>
+        <result property="dealStatus" column="deal_status"/>
+        <result property="district" column="district"/>
+
+
+    </resultMap>
+
+    <select id="selectById" resultMap="PropertyDetailResultMap">
+        SELECT property_num, image_url, address, property_type, deal_type, amount, maintenance_cost,
+               elevator_exists, parking_available_num, options, land_area, land_use, land_name,
+               land_inf_etc1, land_inf_etc2, building_area, building_floor_area, building_ground_floor,
+               building_basement_floor, building_completion_dt, building_inf_etc1, building_inf_etc2,
+               agent_inf, extra_field1, extra_field2, extra_field3, extra_field4,
+               details, notes, created_dt, updated_dt, deal_status, district
+        FROM property
+        WHERE property_num = #{propertyNum}
+    </select>
+
+    <select id="countProperties" resultType="int">
+        SELECT COUNT(*) FROM property
+    </select>
+
+    <select id="selectPropertyListPaged" resultType="com.example.gyupf.property.dto.PropertyListDto">
+        SELECT property_num, image_url, address, property_type, deal_type, amount, land_area,
+               building_area, building_floor_area, created_dt, updated_dt, deal_status, district
+        FROM property
+        ORDER BY created_dt DESC
+            LIMIT #{pageSize} OFFSET #{offset}
+    </select>
+
+    <insert id="insert" parameterType="com.example.gyupf.property.dto.PropertyDetailDto" useGeneratedKeys="true" keyProperty="propertyNum">
+        INSERT INTO property (
+            image_url, address, property_type, deal_type, amount, maintenance_cost,
+            elevator_exists, parking_available_num, options, land_area, land_use,
+            land_name, land_inf_etc1, land_inf_etc2, building_area, building_floor_area,
+            building_ground_floor, building_basement_floor, building_completion_dt,
+            building_inf_etc1, building_inf_etc2, agent_inf, extra_field1, extra_field2,
+            extra_field3, extra_field4, details, notes, deal_status, district
+        ) VALUES (
+                     #{imageUrl}, #{address}, #{propertyType}, #{dealType}, #{amount}, #{maintenanceCost},
+                     #{elevatorExists}, #{parkingAvailableNum}, #{options}, #{landArea}, #{landUse},
+                     #{landName}, #{landInfEtc1}, #{landInfEtc2}, #{buildingArea}, #{buildingFloorArea},
+                     #{buildingGroundFloor}, #{buildingBasementFloor}, #{buildingCompletionDt},
+                     #{buildingInfEtc1}, #{buildingInfEtc2}, #{agentInf}, #{extraField1}, #{extraField2},
+                     #{extraField3}, #{extraField4}, #{details}, #{notes}, #{dealStatus}, #{district}
+                 )
+    </insert>
+
+    <update id="update" parameterType="com.example.gyupf.property.dto.PropertyDetailDto">
+        UPDATE property SET
+                            image_url = #{imageUrl},
+                            address = #{address},
+                            property_type = #{propertyType},
+                            deal_type = #{dealType},
+                            amount = #{amount},
+                            maintenance_cost = #{maintenanceCost},
+                            elevator_exists = #{elevatorExists},
+                            parking_available_num = #{parkingAvailableNum},
+                            options = #{options},
+                            land_area = #{landArea},
+                            land_use = #{landUse},
+                            land_name = #{landName},
+                            land_inf_etc1 = #{landInfEtc1},
+                            land_inf_etc2 = #{landInfEtc2},
+                            building_area = #{buildingArea},
+                            building_floor_area = #{buildingFloorArea},
+                            building_ground_floor = #{buildingGroundFloor},
+                            building_basement_floor = #{buildingBasementFloor},
+                            building_completion_dt = #{buildingCompletionDt},
+                            building_inf_etc1 = #{buildingInfEtc1},
+                            building_inf_etc2 = #{buildingInfEtc2},
+                            agent_inf = #{agentInf},
+                            extra_field1 = #{extraField1},
+                            extra_field2 = #{extraField2},
+                            extra_field3 = #{extraField3},
+                            extra_field4 = #{extraField4},
+                            details = #{details},
+                            notes = #{notes},
+                            deal_status = #{dealStatus},
+                            district = #{district}
+        WHERE property_num = #{propertyNum}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM property WHERE property_num = #{propertyNum}
+    </delete>
+
+    <update id="updateImageUrl" parameterType="com.example.gyupf.property.dto.PropertyDetailDto">
+        UPDATE property
+        SET image_url = #{imageUrl}
+        WHERE property_num = #{propertyNum}
+    </update>
+</mapper>
+

@@ -1,0 +1,14 @@
+# 빌드 디렉토리 무시
+/build/
+gyupf/build/
+
+# 이미지 업로드 디렉토리 무시
+gyupf/src/main/resources/images/
+
+# IDE 설정 무시
+.idea/
+*.iml
+
+# 기타 무시할 파일
+*.log
+.DS_Store

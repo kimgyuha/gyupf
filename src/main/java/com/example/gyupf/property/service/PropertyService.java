@@ -75,39 +75,38 @@ public class PropertyService {
 
         }
     }
-
-    //전체 매물 조회
-    public PagedPropertyResponse getPagedProperties(int page, int size) {
-        int offset = (page - 1) * size;
-
-        List<PropertyListDto> list = propertyMapper.selectPropertyListPaged(size, offset);
-        int totalCount = propertyMapper.countProperties();
-
-        int totalPages = (int) Math.ceil((double) totalCount / size);
-        boolean hasNext = page < totalPages;
-
-        PagedPropertyResponse response = new PagedPropertyResponse();
-        response.setProperties(list);
-        System.out.println("이미지Url : "+ list.get(0).getImageUrl());
-        response.setCurrentPage(page);
-        response.setTotalPages(totalPages);
-        response.setHasNext(hasNext);
-
-        return response;
-    }
     
-    //조건 설정한 매물리스트 조회
+    //조건 설정한 매물리스트 카운트 & 조회
     public PagedPropertyResponse getPropertiesWithCondition(
+            int page,
+            int size,
             String propertyType,
             String dealType,
-            Long minAmount,
-            Long maxAmount,
+            String amountRange,
             String district,
-            String dealStatus,
-            int page,
-            int size) {
+            String dealStatus
+           ) {
 
         int offset = (page - 1) * size;
+
+        Integer minAmount = null;
+        Integer maxAmount = null;
+
+        if (amountRange != null && !amountRange.isEmpty()) {
+            try {
+                if (amountRange.contains("+")) {
+                    // 10억 이상: 예) "100000+"
+                    minAmount = Integer.parseInt(amountRange.replace("+", "")) * 10000;
+                    maxAmount = null; // 상한 없음
+                } else if (amountRange.contains("-")) {
+                    String[] parts = amountRange.split("-");
+                    minAmount = Integer.parseInt(parts[0]) * 10000;
+                    maxAmount = Integer.parseInt(parts[1]) * 10000;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("금액 파싱 실패: " + amountRange);
+            }
+        }
 
         Map<String, Object> params = new HashMap<>();
         params.put("propertyType", propertyType);
@@ -133,7 +132,12 @@ public class PropertyService {
 
         return response;
     }
-    
+
+    //구별 매물 개수
+    public int getPropertyCountByDistrict(String district) {
+        return propertyMapper.countSelectedDistrict(district);
+    }
+
     //단일매물 조회
     public PropertyDetailDto getPropertyById(Long propertyNum) {
         return propertyMapper.selectById(propertyNum);

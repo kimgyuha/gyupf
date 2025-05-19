@@ -53,18 +53,6 @@
         WHERE property_num = #{propertyNum}
     </select>
 
-    <select id="countProperties" resultType="int">
-        SELECT COUNT(*) FROM property
-    </select>
-
-    <select id="selectPropertyListPaged" resultType="com.example.gyupf.property.dto.PropertyListDto">
-        SELECT property_num, image_url, address, property_type, deal_type, amount, land_area,
-               building_area, building_floor_area, created_dt, updated_dt, deal_status, district
-        FROM property
-        ORDER BY created_dt DESC
-            LIMIT #{pageSize} OFFSET #{offset}
-    </select>
-
     <select id="countPropertiesWithCondition" resultType="int">
         SELECT COUNT(*)
         FROM property
@@ -75,10 +63,10 @@
             <if test="dealType != null and dealType != ''">
                 AND deal_type = #{dealType}
             </if>
-            <if test="minAmount != null">
+            <if test="minAmount != null and minAmount != ''">
                 AND amount &gt;= #{minAmount}
             </if>
-            <if test="maxAmount != null">
+            <if test="maxAmount != null and maxAmount != ''">
                 AND amount &lt;= #{maxAmount}
             </if>
             <if test="district != null and district != ''">
@@ -89,7 +77,14 @@
             </if>
         </where>
     </select>
-    <select id="selectPropertyListWithCondition" resultType="com.example.gyupf.property.dto.PropertyListDto">
+
+    <select id="countSelectedDistrict" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM property
+        WHERE district = #{district}
+    </select>
+
+    <select id="selectPropertyListWithConditionPaged" resultType="com.example.gyupf.property.dto.PropertyListDto">
         SELECT property_num, image_url, address, property_type, deal_type, amount, land_area,
         building_area, building_floor_area, created_dt, updated_dt, deal_status, district
         FROM property
@@ -100,10 +95,10 @@
             <if test="dealType != null and dealType != ''">
                 AND deal_type = #{dealType}
             </if>
-            <if test="minAmount != null">
+            <if test="minAmount != null and minAmount != ''">
                 AND amount &gt;= #{minAmount}
             </if>
-            <if test="maxAmount != null">
+            <if test="maxAmount != null and maxAmount != ''">
                 AND amount &lt;= #{maxAmount}
             </if>
             <if test="district != null and district != ''">
@@ -116,6 +111,7 @@
         ORDER BY created_dt DESC
         LIMIT #{pageSize} OFFSET #{offset}
     </select>
+
 
     <insert id="insert" parameterType="com.example.gyupf.property.dto.PropertyDetailDto" useGeneratedKeys="true" keyProperty="propertyNum">
         INSERT INTO property (

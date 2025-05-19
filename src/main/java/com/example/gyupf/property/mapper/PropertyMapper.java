@@ -13,15 +13,17 @@ import java.util.Map;
 public interface PropertyMapper {
 
     List<PropertyListDto> selectAll();
+    
 
-    int countProperties();
-
-    List<PropertyListDto> selectPropertyListPaged(@Param("pageSize") int pageSize, @Param("offset") int offset);
-
+    //조건 적용한 매물 카운트 & 리스트
     int countPropertiesWithCondition(Map<String, Object> params);
+    
     List<PropertyListDto> selectPropertyListWithConditionPaged(Map<String, Object> params);
 
+    //구별 매물 개수
+    int countSelectedDistrict(String district);
 
+    //상세 매물 조회
     PropertyDetailDto selectById(@Param("propertyNum") Long propertyNum);
 
     @Options(useGeneratedKeys = true, keyProperty = "propertyNum")

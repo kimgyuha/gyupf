@@ -3,7 +3,6 @@ package com.example.gyupf.property.controller;
 import com.example.gyupf.property.dto.PagedPropertyResponse;
 import com.example.gyupf.property.dto.PropertyDetailDto;
 import com.example.gyupf.property.service.PropertyService;
-import com.example.gyupf.property.dto.PropertyListDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,42 +21,40 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    // 매물 등록
-    @PostMapping("/register")
-    public ResponseEntity<String> registerProperty(
-
-            @RequestPart("dto") PropertyDetailDto dto,
-            @RequestPart("images") List<MultipartFile> images) throws IOException {
-
-        propertyService.register(dto, images);
-        return ResponseEntity.ok("등록 완료");
-    }
-
-
-    // 무한스크롤용 전체 리스트 조회
-    @GetMapping("/all")
-    public PagedPropertyResponse list(@RequestParam(defaultValue = "1") int page,
-                                      @RequestParam(defaultValue = "10") int size) {
-        return propertyService.getPagedProperties(page, size);
-    }
-
+    //매물 조회(+조건)
     @GetMapping("/search")
     public PagedPropertyResponse searchProperties(
             @RequestParam(required = false) String propertyType,
             @RequestParam(required = false) String dealType,
-            @RequestParam(required = false) Long minAmount,
-            @RequestParam(required = false) Long maxAmount,
+            @RequestParam(required = false) String amountRange,
             @RequestParam(required = false) String district,
             @RequestParam(required = false) String dealStatus,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        return propertyService.getPropertiesWithCondition(propertyType, dealType, minAmount, maxAmount, district, dealStatus, page, size);
+        return propertyService.getPropertiesWithCondition(page, size, propertyType, dealType, amountRange, district, dealStatus);
     }
+
     // 단일 매물 상세 조회
-    @GetMapping("/{id}")
+    @GetMapping("/search/{id}")
     public PropertyDetailDto detail(@PathVariable Long id) {
         return propertyService.getPropertyById(id);
+    }
+
+    // 구별 개수 조회
+    @GetMapping("/districtCount")
+    public int getCountByDistrict(@RequestParam String district) {
+        return propertyService.getPropertyCountByDistrict(district);
+    }
+
+    // 매물 등록
+    @PostMapping("/register")
+    public ResponseEntity<String> registerProperty(
+            @RequestPart("dto") PropertyDetailDto dto,
+            @RequestPart("images") List<MultipartFile> images) throws IOException {
+
+        propertyService.register(dto, images);
+        return ResponseEntity.ok("등록 완료");
     }
 
     // 매물 수정

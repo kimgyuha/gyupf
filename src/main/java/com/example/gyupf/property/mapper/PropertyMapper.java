@@ -13,7 +13,6 @@ import java.util.Map;
 public interface PropertyMapper {
 
     List<PropertyListDto> selectAll();
-    
 
     //조건 적용한 매물 카운트 & 리스트
     int countPropertiesWithCondition(Map<String, Object> params);

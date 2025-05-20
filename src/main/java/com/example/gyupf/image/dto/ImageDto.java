@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ImageDto {
-    private Long imageNum;
     private Long propertyNum;
     private String imageUrl;
+    private Long imageNum;
     private Integer imageSeq;
     private LocalDateTime registedDt;
 }

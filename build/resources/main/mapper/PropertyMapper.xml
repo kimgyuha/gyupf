@@ -42,17 +42,7 @@
 
     </resultMap>
 
-    <select id="selectById" resultMap="PropertyDetailResultMap">
-        SELECT property_num, image_url, address, property_type, deal_type, amount, maintenance_cost,
-               elevator_exists, parking_available_num, options, land_area, land_use, land_name,
-               land_inf_etc1, land_inf_etc2, building_area, building_floor_area, building_ground_floor,
-               building_basement_floor, building_completion_dt, building_inf_etc1, building_inf_etc2,
-               agent_inf, extra_field1, extra_field2, extra_field3, extra_field4,
-               details, notes, created_dt, updated_dt, deal_status, district
-        FROM property
-        WHERE property_num = #{propertyNum}
-    </select>
-
+    <!-- 매물 조건별 카운트(전체 가능) -->
     <select id="countPropertiesWithCondition" resultType="int">
         SELECT COUNT(*)
         FROM property
@@ -78,12 +68,14 @@
         </where>
     </select>
 
+    <!-- 매물 구별 카운트 -->
     <select id="countSelectedDistrict" parameterType="String" resultType="int">
         SELECT COUNT(*)
         FROM property
         WHERE district = #{district}
     </select>
 
+    <!-- 매물 조회 (+조건)-->
     <select id="selectPropertyListWithConditionPaged" resultType="com.example.gyupf.property.dto.PropertyListDto">
         SELECT property_num, image_url, address, property_type, deal_type, amount, land_area,
         building_area, building_floor_area, created_dt, updated_dt, deal_status, district
@@ -112,6 +104,17 @@
         LIMIT #{pageSize} OFFSET #{offset}
     </select>
 
+    <!-- 매물 상세 조회 -->
+    <select id="selectById" resultMap="PropertyDetailResultMap">
+        SELECT property_num, image_url, address, property_type, deal_type, amount, maintenance_cost,
+               elevator_exists, parking_available_num, options, land_area, land_use, land_name,
+               land_inf_etc1, land_inf_etc2, building_area, building_floor_area, building_ground_floor,
+               building_basement_floor, building_completion_dt, building_inf_etc1, building_inf_etc2,
+               agent_inf, extra_field1, extra_field2, extra_field3, extra_field4,
+               details, notes, created_dt, updated_dt, deal_status, district
+        FROM property
+        WHERE property_num = #{propertyNum}
+    </select>
 
     <insert id="insert" parameterType="com.example.gyupf.property.dto.PropertyDetailDto" useGeneratedKeys="true" keyProperty="propertyNum">
         INSERT INTO property (

@@ -1,6 +1,7 @@
 package com.example.gyupf.image.controller;
 
 import com.example.gyupf.favorite.dto.FavoriteDto;
+
 import com.example.gyupf.image.dto.ImageDto;
 import com.example.gyupf.image.service.ImageService;
 import org.springframework.web.bind.annotation.*;

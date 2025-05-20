@@ -36,7 +36,7 @@ public class PropertyController {
     }
 
     // 단일 매물 상세 조회
-    @GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public PropertyDetailDto detail(@PathVariable Long id) {
         return propertyService.getPropertyById(id);
     }

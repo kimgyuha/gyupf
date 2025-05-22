@@ -13,7 +13,7 @@
     </resultMap>
 
     <select id="selectByPropertyNum" resultMap="ImageResultMap">
-        SELECT * FROM property_images WHERE property_num = #{propertyNum}
+        SELECT image_num, property_num, image_url, image_seq, registed_dt  FROM property_images WHERE property_num = #{propertyNum}
     </select>
 
     <insert id="insert" parameterType="com.example.gyupf.image.dto.ImageDto">

@@ -76,7 +76,7 @@ public class PropertyService {
         }
     }
     
-    //조건 설정한 매물리스트 카운트 & 조회
+    //조건 설정한 매물리스트 카운트 & 조건 설정 & 정보 조회
     public PagedPropertyResponse getPropertiesWithCondition(
             int page,
             int size,

@@ -75,7 +75,7 @@
         WHERE district = #{district}
     </select>
 
-    <!-- 매물 조회 (+조건)-->
+    <!-- 매물 조건 설정 후 조회-->
     <select id="selectPropertyListWithConditionPaged" resultType="com.example.gyupf.property.dto.PropertyListDto">
         SELECT property_num, image_url, address, property_type, deal_type, amount, land_area,
         building_area, building_floor_area, created_dt, updated_dt, deal_status, district

@@ -23,17 +23,17 @@ public class FavoriteController {
     }
 
     @GetMapping("/count/{propertyNum}")
-    public int countFavorites(@PathVariable Long propertyNum) {
+    public int countFavorites(@PathVariable("propertyNum") Long propertyNum) {
         return favoriteService.countFavoritesByProperty(propertyNum);
     }
 
     @GetMapping("/customer/{customerNum}")
-    public List<FavoritePropertyDto> getFavoritePropertyList(@PathVariable Long customerNum) {
+    public List<FavoritePropertyDto> getFavoritePropertyList(@PathVariable("customerNum") Long customerNum) {
         return favoriteService.getFavoriteProperties(customerNum);
     }
 
     @GetMapping("/property/{propertyNum}")
-    public List<FavoritePropertyDto> getFavoritesByProperty(@PathVariable Long propertyNum) {
+    public List<FavoritePropertyDto> getFavoritesByProperty(@PathVariable("propertyNum") Long propertyNum) {
         return favoriteService.getFavoritesByProperty(propertyNum);
     }
     @PostMapping
@@ -42,13 +42,13 @@ public class FavoriteController {
     }
 
     @PutMapping("/{favoriteNum}")
-    public void update(@PathVariable Long favoriteNum, @RequestBody FavoriteDto dto) {
+    public void update(@PathVariable("favoriteNum") Long favoriteNum, @RequestBody FavoriteDto dto) {
         dto.setFavoriteNum(favoriteNum);
         favoriteService.updateFavorite(dto);
     }
 
     @DeleteMapping("/{favoriteNum}")
-    public void delete(@PathVariable Long favoriteNum) {
+    public void delete(@PathVariable("favoriteNum") Long favoriteNum) {
         favoriteService.removeFavorite(favoriteNum);
     }
 }

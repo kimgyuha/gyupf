@@ -17,7 +17,6 @@ public class ImageService {
 
     //상세페이지 해당 매물 이미지 리스트 조회
     public List<ImageDto> getImagesByProperty(Long propertyNum) {
-        System.out.println("이미지 두개 나오나?: " + imageMapper.selectByPropertyNum(propertyNum).get(0).getImageUrl());
         return imageMapper.selectByPropertyNum(propertyNum);
     }
 

@@ -63,13 +63,13 @@ public class PropertyService {
 
                     ImageDto imageDto = new ImageDto();
                     imageDto.setPropertyNum(propertyNum);
-                    imageDto.setImageUrl("http://localhost:8080/images/" + propertyNum + "/" + filename);
+                    imageDto.setImageUrl("http://114.207.245.30/images/" + propertyNum + "/" + filename);
                     imageDto.setImageSeq(seq++);
 
                     imageMapper.insert(imageDto);
                 }
             }
-            String firstImagePath = "http://localhost:8080/images/" + propertyNum + "/" + "0_" + images.get(0).getOriginalFilename();
+            String firstImagePath = "http://114.207.245.30/images/" + propertyNum + "/" + "0_" + images.get(0).getOriginalFilename();
             dto.setImageUrl(firstImagePath);
             propertyMapper.updateImageUrl(dto); // image_url만 업데이트하는 쿼리
 

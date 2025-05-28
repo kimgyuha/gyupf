@@ -13,7 +13,7 @@ import com.example.gyupf.property.service.PropertyService;
 
 
 @RestController
-@RequestMapping("/property")
+@RequestMapping("/")
 public class PropertyController {
 
     private final PropertyService propertyService;
@@ -22,8 +22,8 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    //매물 조회(+조건)
-    @GetMapping("/search")
+    //매물 조회(+조건)S
+    @GetMapping("/")
     public PagedPropertyResponse searchProperties(
     	    @RequestParam(name = "propertyType", required = false) String propertyType,
     	    @RequestParam(name = "dealType", required = false) String dealType,

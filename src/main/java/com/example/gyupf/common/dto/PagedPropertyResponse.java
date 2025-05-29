@@ -1,9 +1,11 @@
-package com.example.gyupf.property.dto;
+package com.example.gyupf.common.dto;
+
+import java.util.List;
+
+import com.example.gyupf.property.dto.PropertyListDto;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter

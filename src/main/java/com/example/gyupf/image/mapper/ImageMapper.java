@@ -13,5 +13,5 @@ public interface ImageMapper {
 
     int insert(ImageDto dto);
 
-    int delete(@Param("imageNum") Long imageNum);
+    int delete(@Param("propertyNum") Long propertyNum);
 }

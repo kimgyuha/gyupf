@@ -139,15 +139,15 @@
 		WHERE property_num = #{propertyNum}
 	</update>
 
-	<delete id="delete">
-		DELETE FROM property WHERE property_num = #{propertyNum}
-	</delete>
-
 	<update id="updateImageUrl"
 		parameterType="com.example.gyupf.property.dto.PropertyDetailDto">
 		UPDATE property
 		SET image_url = #{imageUrl}
 		WHERE property_num = #{propertyNum}
 	</update>
+	
+	<delete id="delete">
+		DELETE FROM property WHERE property_num = #{propertyNum}
+	</delete>
 
 </mapper>

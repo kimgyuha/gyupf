@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +30,7 @@ public class AdminPropertyController {
         this.propertyService = propertyService;
     }
     
- // 전체 리스트 페이징
+    // 전체 리스트 페이징
     @GetMapping("/list")
     public PagedPropertyResponse getPagedList(
     	    @RequestParam(name = "page", defaultValue = "1") int page,
@@ -60,7 +61,7 @@ public class AdminPropertyController {
     }
 
     // 매물 수정
-    @PutMapping("/update/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<String> updateProperty(
             @PathVariable("id") Long id,
             @RequestPart("dto") PropertyDetailDto dto,
@@ -70,4 +71,11 @@ public class AdminPropertyController {
         propertyService.updateProperty(dto, newImages);
         return ResponseEntity.ok("매물 수정 완료");
     }
+    // 매물 삭제
+    @DeleteMapping("/delete/{propertyNum}")
+    public ResponseEntity<String> deleteProperty(@PathVariable("propertyNum") Long propertyNum) {
+        propertyService.deleteProperty(propertyNum);
+        return ResponseEntity.ok("매물 삭제 완료");
+    }
+
 }

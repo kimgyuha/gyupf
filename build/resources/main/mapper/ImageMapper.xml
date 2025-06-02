@@ -22,7 +22,7 @@
     </insert>
 
     <delete id="delete">
-        DELETE FROM property_images WHERE image_num = #{imageNum}
+        DELETE FROM property_images WHERE property_num = #{propertyNum}
     </delete>
 
 </mapper>

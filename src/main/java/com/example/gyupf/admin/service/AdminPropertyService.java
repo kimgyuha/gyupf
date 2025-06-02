@@ -60,7 +60,7 @@ public class AdminPropertyService {
     public PropertyDetailDto getByPropertyNum(Long propertyNum) {
         return adminPropertyMapper.selectById(propertyNum);
     }
-    // 매물 저장
+    // 매물 등록
     @Transactional
     public void register(PropertyDetailDto dto, List<MultipartFile> images) throws IOException {
         adminPropertyMapper.insert(dto);
@@ -133,5 +133,12 @@ public class AdminPropertyService {
             adminPropertyMapper.updateImageUrl(dto);
         }
     }
-    
+    //매물 삭제
+    @Transactional
+    public void deleteProperty(Long propertyNum) {
+        // 이미지 먼저 삭제
+        imageMapper.delete(propertyNum);
+        // 매물 삭제
+        adminPropertyMapper.delete(propertyNum);
+    }
 }

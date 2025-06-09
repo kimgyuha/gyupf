@@ -22,8 +22,9 @@ public class PropertyController {
     }
 
     //매물 조회(+조건)S
-    @GetMapping("/")
+    @GetMapping("/") 
     public PagedPropertyResponse searchProperties(
+    		@RequestParam(name = "propertyNum", required = false) Long propertyNum,
     	    @RequestParam(name = "propertyType", required = false) String propertyType,
     	    @RequestParam(name = "dealType", required = false) String dealType,
     	    @RequestParam(name = "amountRange", required = false) String amountRange,
@@ -33,7 +34,7 @@ public class PropertyController {
     	    @RequestParam(name = "size", defaultValue = "10") int size
     	) {
 
-        return propertyService.getPropertiesWithCondition(page, size, propertyType, dealType, amountRange, district, dealStatus);
+        return propertyService.getPropertiesWithCondition(page, size, propertyNum, propertyType, dealType, amountRange, district, dealStatus);
     }
 
     // 단일 매물 상세 조회

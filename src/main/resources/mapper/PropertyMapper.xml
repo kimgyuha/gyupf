@@ -38,15 +38,23 @@
         <result property="updatedDt" column="updated_dt"/>
         <result property="dealStatus" column="deal_status"/>
         <result property="district" column="district"/>
-
-
     </resultMap>
+
+    <!-- 매물 구별 카운트 -->
+    <select id="countSelectedDistrict" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM property
+        WHERE district = #{district}
+    </select>
 
     <!-- 매물 조건별 카운트(전체 가능) -->
     <select id="countPropertiesWithCondition" resultType="int">
         SELECT COUNT(*)
         FROM property
         <where>
+      	    <if test="propertyNum != null and propertyNum != ''">
+                AND property_num = #{propertyNum}
+            </if>
             <if test="propertyType != null and propertyType != ''">
                 AND property_type = #{propertyType}
             </if>
@@ -68,19 +76,15 @@
         </where>
     </select>
 
-    <!-- 매물 구별 카운트 -->
-    <select id="countSelectedDistrict" parameterType="String" resultType="int">
-        SELECT COUNT(*)
-        FROM property
-        WHERE district = #{district}
-    </select>
-
     <!-- 매물 조건 설정 후 조회-->
     <select id="selectPropertyListWithConditionPaged" resultType="com.example.gyupf.property.dto.PropertyListDto">
         SELECT property_num, image_url, address, property_type, deal_type, amount, land_area,
         building_area, building_floor_area, created_dt, updated_dt, deal_status, district
         FROM property
         <where>
+      		<if test="propertyNum != null and propertyNum != ''">
+                AND property_num = #{propertyNum}
+            </if>
             <if test="propertyType != null and propertyType != ''">
                 AND property_type = #{propertyType}
             </if>

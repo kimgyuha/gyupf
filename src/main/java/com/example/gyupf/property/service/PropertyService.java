@@ -29,6 +29,7 @@ public class PropertyService {
     public PagedPropertyResponse getPropertiesWithCondition(
             int page,
             int size,
+            Long propertyNum,
             String propertyType,
             String dealType,
             String amountRange,
@@ -58,6 +59,7 @@ public class PropertyService {
         }
 
         Map<String, Object> params = new HashMap<>();
+        params.put("propertyNum", propertyNum);
         params.put("propertyType", propertyType);
         params.put("dealType", dealType);
         params.put("minAmount", minAmount);

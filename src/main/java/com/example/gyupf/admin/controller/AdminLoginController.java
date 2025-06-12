@@ -12,7 +12,7 @@ import com.example.gyupf.admin.dto.AdminLoginDto;
 import com.example.gyupf.admin.service.AdminLoginService;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminLoginController {
 
     private final AdminLoginService adminLoginService;

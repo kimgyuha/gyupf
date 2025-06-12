@@ -12,7 +12,7 @@ import com.example.gyupf.property.service.PropertyService;
 
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class PropertyController {
 
     private final PropertyService propertyService;
@@ -22,7 +22,7 @@ public class PropertyController {
     }
 
     //매물 조회(+조건)S
-    @GetMapping("/") 
+    @GetMapping("/list") 
     public PagedPropertyResponse searchProperties(
     		@RequestParam(name = "propertyNum", required = false) Long propertyNum,
     	    @RequestParam(name = "propertyType", required = false) String propertyType,

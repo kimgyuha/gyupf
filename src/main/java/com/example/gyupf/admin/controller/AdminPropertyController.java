@@ -21,7 +21,7 @@ import com.example.gyupf.property.dto.PropertyDetailDto;
 import com.example.gyupf.property.dto.PropertyListDto;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminPropertyController {
 
     private final AdminPropertyService propertyService;

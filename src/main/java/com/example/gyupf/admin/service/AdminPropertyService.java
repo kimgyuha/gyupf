@@ -84,13 +84,13 @@ public class AdminPropertyService {
 
                     ImageDto imageDto = new ImageDto();
                     imageDto.setPropertyNum(propertyNum);
-                    imageDto.setImageUrl("http://114.207.245.30/images/" + propertyNum + "/" + filename);
+                    imageDto.setImageUrl("https://gangnamspace.com/images/" + propertyNum + "/" + filename);
                     imageDto.setImageSeq(seq++);
                     imageMapper.insert(imageDto);
                 }
             }
 
-            String firstImagePath = "http://114.207.245.30/images/" + propertyNum + "/" + "0_" + images.get(0).getOriginalFilename();
+            String firstImagePath = "https://gangnamspace.com/images/" + propertyNum + "/" + "0_" + images.get(0).getOriginalFilename();
             dto.setImageUrl(firstImagePath);
             adminPropertyMapper.updateImageUrl(dto);
         }
@@ -122,13 +122,13 @@ public class AdminPropertyService {
 
                     ImageDto imageDto = new ImageDto();
                     imageDto.setPropertyNum(propertyNum);
-                    imageDto.setImageUrl("http://114.207.245.30/images/" + propertyNum + "/" + filename);
+                    imageDto.setImageUrl("https://gangnamspace.com/images/" + propertyNum + "/" + filename);
                     imageDto.setImageSeq(seq++);
                     imageMapper.insert(imageDto);
                 }
             }
 
-            String firstImagePath = "http://114.207.245.30/images/" + propertyNum + "/" + "0_" + newImages.get(0).getOriginalFilename();
+            String firstImagePath = "https://gangnamspace.com/images/" + propertyNum + "/" + "0_" + newImages.get(0).getOriginalFilename();
             dto.setImageUrl(firstImagePath);
             adminPropertyMapper.updateImageUrl(dto);
         }
